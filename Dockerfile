@@ -30,6 +30,6 @@ COPY ./app /var/app
 RUN pip3 install -r /var/app/requirements.txt
 
 # expose ports
-EXPOSE 8080
+EXPOSE 5000
 
 CMD uwsgi --ini /var/app/uwsgi_config.ini
