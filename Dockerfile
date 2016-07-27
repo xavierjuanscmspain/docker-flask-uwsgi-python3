@@ -1,13 +1,35 @@
-FROM python:3.4
+############################################################
+# Dockerfile to build uwsgi using python3 container images
+# Based on Ubuntu 14.04.4
+############################################################
 
+FROM ubuntu:14.04.4
 MAINTAINER Xavier Juan <xavijs2@gmail.com>
 
-RUN pip install uwsgi
-RUN apt-get update && apt-get install -y supervisor \
-&& rm -rf /var/lib/apt/lists/*
+RUN apt-get update
 
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY ./app /app
-WORKDIR /app
+# python 3.4 has already installed by os
+RUN apt-get install -y \
+            python3-pip
 
-CMD ["/usr/bin/supervisord"]
+# clean apt-get
+RUN apt-get autoclean && \
+    apt-get clean && \
+    apt-get autoremove
+
+# update pip
+RUN pip3 install -U pip setuptools
+
+# install uwsgi
+RUN pip3 install uwsgi
+
+# DEMO app here
+COPY ./app /var/app
+
+# install requirements
+RUN pip3 install -r /var/app/requirements.txt
+
+# expose ports
+EXPOSE 8080
+
+CMD uwsgi --ini /var/app/uwsgi_config.ini
