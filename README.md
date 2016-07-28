@@ -1,4 +1,10 @@
 
-# docker build -t xavijs-flask .
+##With docker-compose:
+    
+> docker-compose build && docker-compose up
 
-# docker run -d -p 5000:5000 xavijs-flask
+##Without docker-compose:
+
+> docker build -t xavijs-flask .
+
+> docker run -d -p 5000:5000 xavijs-flask

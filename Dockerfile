@@ -23,13 +23,16 @@ RUN pip3 install -U pip setuptools
 # install uwsgi
 RUN pip3 install uwsgi
 
-# DEMO app here
-COPY ./app /var/app
+# INSTALL requirements before for caching
+COPY ./app/requirements.txt /var/app/requirements.txt
 
 # install requirements
 RUN pip3 install -r /var/app/requirements.txt
 
+# APPLICATION
+COPY ./app /var/app
+
 # expose ports
-EXPOSE 8080
+EXPOSE 5000
 
 CMD uwsgi --ini /var/app/uwsgi_config.ini
