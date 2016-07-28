@@ -8,9 +8,8 @@ MAINTAINER Xavier Juan <xavijs2@gmail.com>
 
 RUN apt-get update
 
-# python 3.4 has already installed by os
-RUN apt-get install -y \
-            python3-pip
+# python 3.4 has already installed
+RUN apt-get install -y python3-pip
 
 # clean apt-get
 RUN apt-get autoclean && \
@@ -30,7 +29,7 @@ COPY ./app/requirements.txt /var/app/requirements.txt
 RUN pip3 install -r /var/app/requirements.txt
 
 # APPLICATION
-COPY ./app /var/app
+COPY ./app/ /var/app/
 
 # expose ports
 EXPOSE 5000
